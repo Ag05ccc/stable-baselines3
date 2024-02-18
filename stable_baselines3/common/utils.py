@@ -342,10 +342,13 @@ def is_vectorized_dict_observation(observation: np.ndarray, observation_space: s
     :return: whether the given observation is vectorized or not
     """
     # We first assume that all observations are not vectorized
+    print("observation : ",observation) 
+    print("observation_space : ",observation_space)
     all_non_vectorized = True
     for key, subspace in observation_space.spaces.items():
         # This fails when the observation is not vectorized
         # or when it has the wrong shape
+        print("key : ",key)
         if observation[key].shape != subspace.shape:
             all_non_vectorized = False
             break

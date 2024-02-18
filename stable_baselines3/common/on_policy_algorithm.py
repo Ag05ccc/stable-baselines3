@@ -1,3 +1,4 @@
+import os
 import sys
 import time
 from typing import Any, Dict, List, Optional, Tuple, Type, TypeVar, Union
@@ -173,6 +174,7 @@ class OnPolicyAlgorithm(BaseAlgorithm):
                 self.policy.reset_noise(env.num_envs)
 
             with th.no_grad():
+                # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                 # Convert to pytorch tensor or to TensorDict
                 obs_tensor = obs_as_tensor(self._last_obs, self.device)
                 actions, values, log_probs = self.policy(obs_tensor)
@@ -297,6 +299,17 @@ class OnPolicyAlgorithm(BaseAlgorithm):
                 self.logger.dump(step=self.num_timesteps)
 
             self.train()
+            
+            # DEBUG - Save policy
+            if log_interval is not None and iteration % log_interval == 0:
+                policy_path = self.logger.get_dir() + "/Policy"
+                os.makedirs(policy_path, exist_ok=True)
+                self.policy.save(policy_path + "/iter_{0:05d}.pth".format(iteration))
+
+                self.env.save_rms(
+                    save_dir=self.logger.get_dir() + "/RMS", n_iter=iteration
+                )
+                
 
         callback.on_training_end()
 

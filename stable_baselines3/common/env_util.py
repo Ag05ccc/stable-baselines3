@@ -92,8 +92,11 @@ def make_vec_env(
                 kwargs.update(env_kwargs)
                 try:
                     env = gym.make(env_id, **kwargs)  # type: ignore[arg-type]
+                    print("ENV OLUSTURULDU")
                 except TypeError:
                     env = gym.make(env_id, **env_kwargs)
+                    print("ENV EXCEPT ")
+                print(env)
             else:
                 env = env_id(**env_kwargs)
                 # Patch to support gym 0.21/0.26 and gymnasium

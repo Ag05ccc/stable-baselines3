@@ -163,6 +163,7 @@ class BaseModel(nn.Module):
         """
         th.save({"state_dict": self.state_dict(), "data": self._get_constructor_parameters()}, path)
 
+
     @classmethod
     def load(cls: Type[SelfBaseModel], path: str, device: Union[th.device, str] = "auto") -> SelfBaseModel:
         """
@@ -253,6 +254,7 @@ class BaseModel(nn.Module):
                     obs_ = maybe_transpose(obs, obs_space)
                 else:
                     obs_ = np.array(obs)
+                
                 vectorized_env = vectorized_env or is_vectorized_observation(obs_, obs_space)
                 # Add batch dimension if needed
                 observation[key] = obs_.reshape((-1, *self.observation_space[key].shape))  # type: ignore[misc]
@@ -263,9 +265,24 @@ class BaseModel(nn.Module):
             observation = maybe_transpose(observation, self.observation_space)
 
         else:
+            print("policies - obs_to_tensor -BEFORE 1 : ",observation)
+            print("policies - obs_to_tensor -BEFORE 1 : ",observation)
+            print("policies - obs_to_tensor -BEFORE 1 : ",type(observation))
+            print("*********************************")
             observation = np.array(observation)
+            print("policies - obs_to_tensor -AFTER 1 : ",observation)
+            print("policies - obs_to_tensor -AFTER 1 : ",observation)
+            print("policies - obs_to_tensor -AFTER 1 : ",observation)
+            print("*********************************")
 
         if not isinstance(observation, dict):
+            print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@qq")
+            print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@qq")
+            print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@qq")
+            print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@qq")
+            print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@qq")
+            print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@qq")
+            print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@qq")
             # Dict obs need to be handled separately
             vectorized_env = is_vectorized_observation(observation, self.observation_space)
             # Add batch dimension if needed

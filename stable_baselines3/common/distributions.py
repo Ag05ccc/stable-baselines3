@@ -160,7 +160,11 @@ class DiagGaussianDistribution(Distribution):
         :param log_std:
         :return:
         """
+        # DEBUG
+        # DEBUG - BURADAN NAN DEGER GELIYOR COZUM OLARAK ZERO ILE DEGISTIRIYORUM
+        mean_actions = th.where(th.isnan(mean_actions), th.zeros_like(mean_actions), mean_actions)
         action_std = th.ones_like(mean_actions) * log_std.exp()
+
         self.distribution = Normal(mean_actions, action_std)
         return self
 

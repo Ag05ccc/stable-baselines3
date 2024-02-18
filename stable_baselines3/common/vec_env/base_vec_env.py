@@ -70,7 +70,9 @@ class VecEnv(ABC):
         self._seeds: List[Optional[int]] = [None for _ in range(num_envs)]
         # options to be used in the next call to env.reset()
         self._options: List[Dict[str, Any]] = [{} for _ in range(num_envs)]
-
+        
+        # DEBUG
+        # render_modes = [None for _ in range(num_envs)]
         try:
             render_modes = self.get_attr("render_mode")
         except AttributeError:
@@ -202,8 +204,9 @@ class VecEnv(ABC):
         :param actions: the action
         :return: observation, reward, done, information
         """
-        self.step_async(actions)
-        return self.step_wait()
+        # DEBUG - Bunlari neden kapattik ???
+        #self.step_async(actions)
+        return NotImplementedError #self.step_wait()
 
     def get_images(self) -> Sequence[Optional[np.ndarray]]:
         """

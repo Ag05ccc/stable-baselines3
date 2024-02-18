@@ -61,7 +61,10 @@ def evaluate_policy(
     if not isinstance(env, VecEnv):
         env = DummyVecEnv([lambda: env])  # type: ignore[list-item, return-value]
 
-    is_monitor_wrapped = is_vecenv_wrapped(env, VecMonitor) or env.env_is_wrapped(Monitor)[0]
+    # DEBUG 
+    # is_monitor_wrapped = is_vecenv_wrapped(env, VecMonitor) or env.env_is_wrapped(Monitor)[0]
+        # DEBUG - @TODO: Neden intented olarak yazılmış?
+        is_monitor_wrapped = True 
 
     if not is_monitor_wrapped and warn:
         warnings.warn(
@@ -85,6 +88,7 @@ def evaluate_policy(
     states = None
     episode_starts = np.ones((env.num_envs,), dtype=bool)
     while (episode_counts < episode_count_targets).any():
+
         actions, states = model.predict(
             observations,  # type: ignore[arg-type]
             state=states,

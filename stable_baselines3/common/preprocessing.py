@@ -6,6 +6,7 @@ import torch as th
 from gymnasium import spaces
 from torch.nn import functional as F
 
+import gym
 
 def is_image_space_channels_first(observation_space: spaces.Box) -> bool:
     """
@@ -149,6 +150,11 @@ def get_obs_shape(
     :param observation_space:
     :return:
     """
+    # DEBUG
+    # for i in range(100):
+    #     print(observation_space, "   ", type(observation_space))
+        
+    # if isinstance(observation_space, gym.spaces.Box):
     if isinstance(observation_space, spaces.Box):
         return observation_space.shape
     elif isinstance(observation_space, spaces.Discrete):
